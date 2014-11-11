@@ -11,40 +11,104 @@ use Net::FTP::Tiny qw(ftp_get);
 our $VERSION = '0.01';
 
 has 'client' => (
-	is	=>	'rw',
-	isa	=>	'REST::Client',
-	default => sub {
+		is	=>	'rw',
+		isa	=>	'REST::Client',
+		default => sub {
 		my $self = shift;
 		return my $obj = REST::Client->new({host=> "http://rest.kegg.jp", timeout => 10,});
 		}
-	);
+		);
 
 has 'operation' => (
-	is	=>	'rw',
-	isa	=>	'Str',
-	);
+		is	=>	'rw',
+		isa	=>	'Str',
+		);
 
 has 'database' => (
-	is	=>	'rw',
-	isa	=>	'Str',
-	);
+		is	=>	'rw',
+		isa	=>	'Str',
+		);
 
 has	'organism' => (
-	is	=>	'rw',
-	isa	=>	'Str',
-	);
+		is	=>	'rw',
+		isa	=>	'Str',
+		);
 
 
 sub database_info {
 	my $self  = shift;
 	my %param = @_;
 
-	$self->operation('/info');
+	$self->operation('/info/');
 	$self->database($param{'database'}) if defined $param{'database'};
 	$self->organism($param{'organism'}) if defined $param{'organism'};
+
+	if ( $param{'database'} ) {
+		
+		$self->client->GET($self->operation.$param{'database'});
+
+	} elsif ( $param{'organism'} ) {
+
+		$self->client->GET($self->operation.$param{'organism'});
+	}
+
+
+	return $self->client->responseContent;
+}
+
+
+sub entry_list {
+	my $self  = shift;
+	my %param = @_;
+
+	$self->operation('/list/');
+    $self->database($param{'database'}) if defined $param{'database'};
+	$self->organism($param{'organism'}) if defined $param{'organism'};
+
+	if ( $param{'database'} && $param{'organism'} ) { 
+		
+		$self->client->GET($self->operation.$param{'database'}."/".$param{'organism'});
+		
+	} elsif ( $param{'database'} ) {
+		
+		$self->client->GET($self->operation.$param{'database'});
+
+	} elsif ( $param{'organism'} ) {
+
+		$self->client->GET($self->operation.$param{'organism'});
+
+	}
+
+
+	my @result = split(/\n/, $self->client->responseContent);
+	return @result;
+
 }
 
 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

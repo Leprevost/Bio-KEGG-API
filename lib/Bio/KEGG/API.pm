@@ -15,7 +15,7 @@ has 'client' => (
 		isa	=>	'REST::Client',
 		default => sub {
 		my $self = shift;
-		return my $obj = REST::Client->new({host=> "http://rest.kegg.jp", timeout => 10,});
+		return my $obj = REST::Client->new({host=> "http://rest.kegg.jp", timeout => 30,});
 		}
 		);
 
@@ -79,6 +79,35 @@ sub entry_list {
 
 	}
 
+	my @result = split(/\n/, $self->client->responseContent);
+	return @result;
+
+}
+
+
+sub data_search {
+	my $self  = shift;
+	my %param = @_;
+
+	$self->operation('/find/');
+
+	$self->database($param{'database'}) if defined $param{'database'};
+	$self->organism($param{'organism'}) if defined $param{'organism'};
+	$self->organism($param{'query'}) 	if defined $param{'query'};
+
+	if ( $param{'database'} && $param{'query'} ) {
+		
+		$self->client->GET($self->operation . $param{'database'} . "/" . $param{'query'});
+
+	} elsif ( $param{'organism'} && $param{'query'}) {
+
+		$self->client->GET($self->operation . $param{'organism'} . "/" . $param{'query'});
+
+	} elsif ( $param{'database'} && $param{'organism'}) {
+		
+		$self->client->GET($self->operation.$param{'database'}."/".$param{'organism'});
+
+	};
 
 	my @result = split(/\n/, $self->client->responseContent);
 	return @result;

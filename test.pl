@@ -8,7 +8,7 @@ use DDP;
 
 my $k = Bio::KEGG::API->new();
 
-my @result = $k->data_search(database => 'genes', query => 'kinase');
+my @result = $k->id_convertion(target => 'eco', source => 'ncbi-geneid');
 p @result;
 
 

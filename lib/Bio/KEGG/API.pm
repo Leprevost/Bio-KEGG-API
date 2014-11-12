@@ -17,7 +17,7 @@ has 'client' => (
 		my $self = shift;
 		return my $obj = REST::Client->new({host=> "http://rest.kegg.jp", timeout => 30,});
 		}
-		);
+	);
 
 has 'operation' => (
 		is	=>	'rw',
@@ -51,7 +51,6 @@ sub database_info {
 
 		$self->client->GET($self->operation.$param{'organism'});
 	}
-
 
 	return $self->client->responseContent;
 }
@@ -93,7 +92,7 @@ sub data_search {
 
 	$self->database($param{'database'}) if defined $param{'database'};
 	$self->organism($param{'organism'}) if defined $param{'organism'};
-	$self->organism($param{'query'}) 	if defined $param{'query'};
+	$self->organism($param{'query'})    if defined $param{'query'};
 
 	if ( $param{'database'} && $param{'query'} ) {
 		
@@ -111,6 +110,40 @@ sub data_search {
 
 	my @result = split(/\n/, $self->client->responseContent);
 	return @result;
+
+}
+
+
+sub id_convertion {
+	my $self  = shift;
+	my %param = @_;
+
+	$self->operation('/conv/');
+
+	$self->database($param{'target'}) if defined $param{'target'};
+	$self->organism($param{'source'}) if defined $param{'source'};
+
+	if ( $param{'target'} && $param{'source'} ) {
+		
+		$self->client->GET($self->operation.$param{'target'}."/".$param{'source'});
+
+	}
+
+	my @result = split(/\t/, $self->client->responseContent );
+
+	for my $elem ( @result ) {
+		
+		$elem =~ s/\n//g;
+	}
+
+	return @result;
+
+}
+
+
+sub data_retrieval {
+	my $self  = shift;
+	my $param = @_;
 
 }
 

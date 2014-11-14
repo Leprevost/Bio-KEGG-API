@@ -31,6 +31,8 @@ Displays the current statistics of a given database
 
 <org> = KEGG organism code or T number
 
+Examples:
+
 	$api->database_info(database => 'kegg);
 	$api->database_info(database => 'pathway);
 	$api->database_info(database => 'hsa);

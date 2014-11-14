@@ -25,11 +25,15 @@ This is a simple Perl interface to KEGG API system, please verify which database
 
 Displays the current statistics of a given database
 
+	$api->database_info(database => '');
+
 <database> = pathway | brite | module | ko | genome | <org> | compound | glycan |
              reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
              genomes | genes | ligand | kegg
 
 <org> = KEGG organism code or T number
+
+Examples:
 
 	$api->database_info(database => 'kegg);
 	$api->database_info(database => 'pathway);

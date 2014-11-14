@@ -8,5 +8,5 @@ use DDP;
 
 my $k = Bio::KEGG::API->new();
 
-say $k->entry_list(database => 'pathway', organism => 'hsa');
+say $k->data_search(database => 'reaction', organism => 'hsa', query => 'kinase');
 

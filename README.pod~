@@ -30,6 +30,7 @@ Displays the current statistics of a given database
 <database> = pathway | brite | module | ko | genome | <org> | compound | glycan |
              reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
              genomes | genes | ligand | kegg
+
 <org> = KEGG organism code or T number
 
 Examples:
@@ -37,6 +38,8 @@ Examples:
 	$api->database_info(database => 'kegg');
 	$api->database_info(database => 'pathway');
 	$api->database_info(database => 'hsa');
+
+
 
 =head2 Entry list
 
@@ -49,7 +52,34 @@ Returns a list of entry identifiers and associated definition for a given databa
 <database> = pathway | brite | module | ko | genome | <org> | compound | glycan |
              reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
              organism
+
 <org> = KEGG organism code or T number
+
+Examples:
+
+
+	$k->entry_list(database => 'pathway');
+	$k->entry_list(database => 'pathway', organism => 'hsa');
+	$k->entry_list(organism => 'hsa');
+
+=head2 Data Search
+
+Finds entries with matching query keywords or other query data in a given database.
+
+options: database, oganism, query.
+
+<database> = pathway | module | ko | genome | <org> | compound | glycan |
+             reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
+             genes | ligand
+
+<org> = KEGG organism code or T number
+
+Example:
+
+	$k->data_search(database => 'reaction', query => 'kinase');
+	$k->data_search(database => 'reaction', query => 'kinase');
+	$k->data_search(database => 'reaction', organism => 'hsa', query => 'kinase');
+
 
 
 =head1 AUTHOR

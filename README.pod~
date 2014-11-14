@@ -36,6 +36,7 @@ Examples:
 	$api->database_info(database => 'pathway);
 	$api->database_info(database => 'hsa);
 
+
 =head1 AUTHOR
 
 Felipe da Veiga Leprevost, C<< <leprevost at cpan.org> >>

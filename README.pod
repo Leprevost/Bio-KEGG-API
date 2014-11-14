@@ -30,7 +30,6 @@ Displays the current statistics of a given database
 <database> = pathway | brite | module | ko | genome | <org> | compound | glycan |
              reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
              genomes | genes | ligand | kegg
-
 <org> = KEGG organism code or T number
 
 Examples:
@@ -38,6 +37,26 @@ Examples:
 	$api->database_info(database => 'kegg');
 	$api->database_info(database => 'pathway');
 	$api->database_info(database => 'hsa');
+
+=head2 Entry list
+
+Returns a list of entry identifiers and associated definition for a given database or a given set of database entries
+
+	$k->entry_list(database => 'pathway');
+	$k->entry_list(database => 'pathway', organism => 'hsa');
+
+
+<database> = pathway | brite | module | ko | genome | <org> | compound | glycan |
+             reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
+             organism
+<org> = KEGG organism code or T number
+
+Examples:
+
+
+	$k->entry_list(database => 'pathway');
+	$k->entry_list(database => 'pathway', organism => 'hsa');
+	$k->entry_list(organism => 'hsa');
 
 
 =head1 AUTHOR

@@ -8,5 +8,5 @@ use DDP;
 
 my $k = Bio::KEGG::API->new();
 
-say $k->database_info(database => 'hsa');
+say $k->entry_list(database => 'pathway', organism => 'hsa');
 

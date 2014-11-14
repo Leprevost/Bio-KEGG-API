@@ -18,8 +18,9 @@ WriteMakefile(
         'Test::More' => 0,
     },
     PREREQ_PM => {
-        'Moose'			=> 0,
-	'namespace::autoclean'	=> 0,
+        'Moose'					=> 0,
+		'namespace::autoclean'	=> 0,
+
     },
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'Bio-KEGG-API-*' },

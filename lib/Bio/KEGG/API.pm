@@ -133,7 +133,7 @@ sub id_convertion {
 
 	for my $elem ( @result ) {
 		
-		$elem =~ s/\n//g;
+		$elem =~ s/\n/\t/g;
 	}
 
 	return @result;
@@ -147,41 +147,33 @@ sub data_retrieval {
 
 }
 
+
+sub linked_entries {
+	my $self  = shift;
+	my %param = @_;
+
+	$self->operation('/link/');
+
+	$self->database($param{'target'}) if defined $param{'target'};
+	$self->organism($param{'source'}) if defined $param{'source'};
+
+	if ( $param{'target'} && $param{'source'} ) {
+		
+		$self->client->GET($self->operation.$param{'target'}."/".$param{'source'});
+
+	}
+
+	my @result = split(/\t/, $self->client->responseContent );
+
+	for my $elem ( @result ) {
+		
+		$elem =~ s/\n/\t/g;
+	}
+
+	return @result;
+
+}
+
+
+
 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -27,17 +27,15 @@ Displays the current statistics of a given database
 
 options: database, oganism.
 
-<database> = pathway | brite | module | ko | genome | <org> | compound | glycan |
-             reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
-             genomes | genes | ligand | kegg
+<database> = pathway | brite | module | ko | genome | <org> | compound | glycan | reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ | genomes | genes | ligand | kegg
 
 <org> = KEGG organism code or T number
 
 Examples:
 
-	$api->database_info(database => 'kegg');
-	$api->database_info(database => 'pathway');
-	$api->database_info(database => 'hsa');
+	my @result = $api->database_info(database => 'kegg');
+	my @result = $api->database_info(database => 'pathway');
+	my @result = $api->database_info(database => 'hsa');
 
 
 
@@ -47,17 +45,15 @@ Returns a list of entry identifiers and associated definition for a given databa
 
 options: database, oganism.
 
-<database> = pathway | brite | module | ko | genome | <org> | compound | glycan |
-             reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
-             organism
+<database> = pathway | brite | module | ko | genome | <org> | compound | glycan | reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ | organism
 
 <org> = KEGG organism code or T number
 
 Examples:
 
-	$k->entry_list(database => 'pathway');
-	$k->entry_list(database => 'pathway', organism => 'hsa');
-	$k->entry_list(organism => 'hsa');
+	my @result = $api->entry_list(database => 'pathway');
+	my @result = $api->entry_list(database => 'pathway', organism => 'hsa');
+	my @result = $api->entry_list(organism => 'hsa');
 
 =head2 Data Search
 
@@ -65,19 +61,52 @@ Finds entries with matching query keywords or other query data in a given databa
 
 options: database, oganism, query.
 
-<database> = pathway | module | ko | genome | <org> | compound | glycan |
-             reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ |
-             genes | ligand
+<database> = pathway | module | ko | genome | <org> | compound | glycan | reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ | genes | ligand
 
 <org> = KEGG organism code or T number
 
 Example:
 
-	$k->data_search(database => 'reaction', query => 'kinase');
-	$k->data_search(database => 'reaction', query => 'kinase');
-	$k->data_search(database => 'reaction', organism => 'hsa', query => 'kinase');
+	my @result = $api->data_search(database => 'genes', query => 'kinase');
+	my @result = $api->data_search(database => 'reaction', query => 'kinase');
+	my @result = $api->data_search(database => 'pathway', organism => 'hsa', query => 'kinase');
+
+=head2 ID Convertion
+
+Convert KEGG identifiers to/from outside identifiers.
+
+options: target, source.
+
+For gene identifiers:
+<kegg_db> = <org>
+<org> = KEGG organism code or T number
+<outside_db> = ncbi-gi | ncbi-geneid | uniprot
+
+For chemical substance identifiers:
+<kegg_db> = drug | compound | glycan
+<outside_db> = pubchem | chebi
+
+Examples:
+
+	my @result = $api->id_convertion(target => 'eco', source => 'ncbi-geneid');
+	my @result = $api->id_convertion(target => 'ncbi-geneid', source => 'eco');
 
 
+=head2 Linked Entries
+
+Find related entries by using database cross-references.
+
+options: target, source.
+
+<target_db> = <database>
+<source_db> = <database>
+
+<database> = pathway | brite | module | ko | genome | <org> | compound | glycan | reaction | rpair | rclass | enzyme | disease | drug | dgroup | environ
+
+Examples:
+
+	my @result = $api->linked_entries(target => 'pathway', source => 'hsa');
+	my @result = $api->linked_entries(target => 'genes', source => 'K00500');
 
 =head1 AUTHOR
 

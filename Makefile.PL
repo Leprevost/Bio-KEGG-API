@@ -20,8 +20,18 @@ WriteMakefile(
     PREREQ_PM => {
         'Moose'					=> 0,
 		'namespace::autoclean'	=> 0,
-
+		'REST::Client'			=> 0,
+		'Net::FTP::Tiny'		=> 0,
     },
+    (! eval { ExtUtils::MakeMaker->VERSION(6.46) } ? () :
+        (META_ADD => {
+    	    resources => {
+                homepage   => 'https://github.com/Leprevost/Bio-KEGG-API',
+                repository => 'https://github.com/Leprevost/Bio-KEGG-API',
+                bugtracker => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Bio-KEGG-API',
+            },
+        })
+    ),
     dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean => { FILES => 'Bio-KEGG-API-*' },
 );
